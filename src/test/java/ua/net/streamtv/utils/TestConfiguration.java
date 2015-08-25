@@ -1,8 +1,8 @@
 package ua.net.streamtv.utils;
 
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.firefox.FirefoxProfile;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -45,12 +45,14 @@ public class TestConfiguration {
 
     @Bean(destroyMethod = "quit")
     public WebDriver driver() {
-        FirefoxProfile profile = new FirefoxProfile();
-        profile.setPreference("browser.download.folderList", 2);
-        profile.setPreference("browser.download.manager.showWhenStarting", false);
-        profile.setPreference("browser.download.dir", "/home/vanish/");
-        profile.setPreference("browser.helperApps.neverAsk.saveToDisk", "text/csv");
-        return new FirefoxDriver(profile);
+        String desiredDriver = System.getProperty("driver");
+        if ("chrome".equals(desiredDriver)) {
+            System.setProperty("webdriver.chrome.driver", System.getProperty("user.dir") + "/src/test/resources/drivers/chromedriver.exe");
+            return new ChromeDriver();
+        } else {
+            return new FirefoxDriver();
+        }
+
     }
 
     @Bean
