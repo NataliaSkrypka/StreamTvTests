@@ -18,3 +18,5 @@ Steps to run script :
 Allure reports. After test run you can find report files under /target/allure-results folder.
 To generate html reports execute _mvn site_, after that result can be found under /target/site/allure-maven-plugin folder.
 Please follow official Allure documentation to open html reports
+
+To execute tests in chrome add "-Ddriver=chrome" into command line. E.x. mvn test -Ddriver=chrome. By default it starts firefox.
